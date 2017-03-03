@@ -3,9 +3,8 @@ FROM quay.io/continuouspipe/symfony-php7.1-nginx:stable
 # Set environment variables and general build configuration
 ARG SYMFONY_ENV=dev
 ARG DEVELOPMENT_MODE=true
-ARG SYLIUS_APP_DEV_PERMITTED=true
 ENV SYMFONY_ENV $SYMFONY_ENV
-ENV SYLIUS_APP_DEV_PERMITTED $SYLIUS_APP_DEV_PERMITTED
+ENV SYLIUS_APP_DEV_PERMITTED true
 
 # Install NodeJS and NPM to allow assets building
 RUN apt-get update -qq \
