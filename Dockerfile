@@ -16,9 +16,9 @@ RUN apt-get update -qq \
  && rm -rf /var/lib/apt/lists/* \
  && ln -s /usr/bin/nodejs /usr/bin/node
 
-# Set up the default timezone
-RUN echo "date.timezone = Europe/London" >> /etc/php/7.0/fpm/conf.d/docker.ini \
- && echo "date.timezone = Europe/London" >> /etc/php/7.0/cli/conf.d/docker.ini
+# Set up the default timezone for PHP
+RUN echo "date.timezone = UTC" >> /etc/php/7.0/fpm/conf.d/docker.ini \
+ && echo "date.timezone = UTC" >> /etc/php/7.0/cli/conf.d/docker.ini
 
 # Copy the current directory, but wipe the cache
 COPY . /app/
