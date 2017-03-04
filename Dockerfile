@@ -6,14 +6,12 @@ FROM quay.io/continuouspipe/symfony-php7.1-nginx:stable
 # `/app.php`, `/app_dev.php` and `/app_test.php` will still use
 # appropriate environments despite the option you provide here.
 ARG SYMFONY_ENV=dev
-
 # Enforce development mode of `container build`. Default is `false`.
 # This primarily controls `composer install` flags. When this is
 # set to `false` `--no-dev` flag would be added to `composer
 # install`, making it ignore all the dev dependencies. Useful
 # option in production, but hindering in development.
 ARG DEVELOPMENT_MODE=true
-
 # Here we propagate build-level environment variable to a container
 # level one. `ARG` sets environment variables available only during
 # the container build phase. `ENV` sets environment variables
@@ -21,7 +19,6 @@ ARG DEVELOPMENT_MODE=true
 # right here makes Symfony environment inside the built container
 # to be exactly the same as the one used while building it.
 ENV SYMFONY_ENV $SYMFONY_ENV
-
 # This enables/disables `/app_dev.php` and `/app_test.php` front
 # controllers. Default is `false`.
 ENV SYLIUS_APP_DEV_PERMITTED true
@@ -59,7 +56,6 @@ RUN rm -rf var/cache/*
 # This command is provided by `php-nginx` container and
 # extended by `symfony-php-nginx`.
 RUN container build
-
 # Install node dependencies.
 # Those primarily are related to the asset pipeline.
 RUN npm install
@@ -71,7 +67,6 @@ RUN npm install
 # places in `dev` environment. This line isn't necessary
 # for `prod` containers.
 RUN composer --no-interaction dump-autoload
-
 # Wipe the cache after all the build activities.
 # We want this container to be clean slate for a server,
 # hence we wipe the cache folder.
