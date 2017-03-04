@@ -37,9 +37,10 @@ I believe is a reasonable tradeoff.
 Quirks
 ------
 
-- Default environment is `dev`
+- Based on [`php-nginx`](https://github.com/continuouspipe/dockerfiles/tree/master/php-nginx) and [`symfony`](https://github.com/continuouspipe/dockerfiles/tree/master/symfony) containers
+- Container environment is set to `dev`
 - Accessing `/app_dev.php` is allowed by default
-- HTTPS is enforced, Certificate is automatically generated
+- HTTPS is enforced & certificate is automatically generated (configurable)
 - `vendor/`, `node_modules/` and `var/cache` folders arent shared with the local system
 
 Usage
