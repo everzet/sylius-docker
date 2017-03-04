@@ -45,8 +45,13 @@ Quirks
 Usage
 -----
 
+### Initial setup
+
 ```
 > composer create-project -s beta sylius/sylius-standard acme
+| database_host: mysql
+| database_user: root
+| database_password: root
 > cd acme
 > cp ../THIS-REPO/Dockerfile .
 > cp ../THIS-REPO/docker-compose.yml .
@@ -54,4 +59,10 @@ Usage
 > docker-compose run --rm web bin/console sylius:install
 > docker-compose run --rm web npm run gulp
 > open https://localhost/app_dev.php
+```
+
+### On `package.json` or `composer.json` update
+
+```
+> docker-compose up -d --build web
 ```
