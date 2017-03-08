@@ -46,11 +46,11 @@ RUN echo "date.timezone = UTC" >> /etc/php/7.0/fpm/conf.d/docker.ini \
 COPY . /app/
 # Make container's `/app` directory a working directory.
 WORKDIR /app
-# Remove Symfony cache.
+# Remove Symfony cache and logs.
 # As we copied the entire `/app` directory previously, it
-# potentially came with the local system cache. We obviously
-# don't care for it, so we wipe `var/cache` clean.
-RUN rm -rf var/cache/*
+# potentially came with the local system cache and logs. We
+# obviously don't care for it, so we wipe `var/cache` clean.
+RUN rm -rf var/cache/* var/logs/*
 
 # Build web-server, permissions, dependencies and app itself.
 # This command is provided by `php-nginx` container and
@@ -67,7 +67,7 @@ RUN npm install
 # places in `dev` environment. This line isn't necessary
 # for `prod` containers.
 RUN composer --no-interaction dump-autoload
-# Wipe the cache after all the build activities.
+# Wipe the cache and logs after all the build activities.
 # We want this container to be clean slate for a server,
-# hence we wipe the cache folder.
-RUN rm -rf var/cache/*
+# hence we wipe the cache and logs folders.
+RUN rm -rf var/cache/* var/logs/*

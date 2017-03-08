@@ -16,7 +16,6 @@ services:
       - ./web:/app/web
       - ./bin:/app/bin
       - ./features:/app/features
-      - ./var/logs:/app/var/logs
 
   mysql:
     image: mariadb
