@@ -33,12 +33,12 @@ RUN apt-get update -qq \
  && apt-get auto-remove -qq -y \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/* \
- && ln -s /usr/bin/nodejs /usr/bin/node
+ && ln -s /usr/bin/nodejs /usr/bin/node \
 
 # Set up the default timezone for PHP.
 # `php-nginx` sets timezone for FPM configuration, but not CLI.
 # This ensures PHP CLI inside container have timezone set too.
-RUN echo "date.timezone = UTC" >> /etc/php/7.0/cli/conf.d/docker.ini
+ && echo "date.timezone = UTC" >> /etc/php/7.0/cli/conf.d/docker.ini
 
 # Copy the entire current directory into container's `/app`.
 COPY . /app/
@@ -48,15 +48,16 @@ WORKDIR /app
 # As we copied the entire `/app` directory previously, it
 # potentially came with the local system cache and logs. We
 # obviously don't care for it, so we wipe `var/cache` clean.
-RUN rm -rf var/cache/* var/logs/*
+RUN rm -rf var/cache/* var/logs/* \
 
 # Build web-server, permissions, dependencies and app itself.
 # This command is provided by `php-nginx` container and
 # extended by `symfony-php-nginx`.
-RUN container build
+ && container build \
+ 
 # Install node dependencies.
 # Those primarily are related to the asset pipeline.
-RUN npm install
+ && npm install \
 
 # Rebuild autoloader without optimisation.
 # `php-nginx` container when executes `container build`
@@ -64,8 +65,9 @@ RUN npm install
 # in `prod` environment, but breaks application in multiple
 # places in `dev` environment. This line isn't necessary
 # for `prod` containers.
-RUN composer --no-interaction dump-autoload
+ && composer --no-interaction dump-autoload \
+
 # Wipe the cache and logs after all the build activities.
 # We want this container to be clean slate for a server,
 # hence we wipe the cache and logs folders.
-RUN rm -rf var/cache/* var/logs/*
+ && rm -rf var/cache/* var/logs/*
