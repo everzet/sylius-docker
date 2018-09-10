@@ -38,7 +38,7 @@ RUN apt-get update -qq \
 # Set up the default timezone for PHP.
 # `php-nginx` sets timezone for FPM configuration, but not CLI.
 # This ensures PHP CLI inside container have timezone set too.
-RUN echo "date.timezone = UTC" >> /etc/php/7.0/cli/conf.d/docker.ini
+RUN echo "date.timezone = UTC" >> /etc/php/7.1/cli/conf.d/docker.ini
 
 # Copy the entire current directory into container's `/app`.
 COPY . /app/
